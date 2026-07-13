@@ -1,11 +1,9 @@
-
 <!DOCTYPE html>
 <html lang="am">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ማኮ - የሰከንድ ሃንድ እቃዎች መገበያያ መድረክ</title>
-    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -29,7 +27,6 @@
             }
         }
     </script>
-    <!-- FontAwesome የኣይኮን ማውጫ -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         .no-scrollbar::-webkit-scrollbar { display: none; }
@@ -38,10 +35,8 @@
 </head>
 <body class="bg-gray-50 text-gray-800 font-sans min-h-screen pb-20 md:pb-5">
 
-    <!-- የላይኛው አሰሳ ባር (Header) -->
     <header class="bg-white border-b border-gray-100 sticky top-0 z-40 shadow-sm">
         <div class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
-            <!-- የሎጎ ክፍል -->
             <a href="#" onclick="showSection('home')" class="flex items-center gap-2">
                 <div class="w-10 h-10 bg-primary-600 rounded-xl flex items-center justify-center text-white shadow-md shadow-primary-500/20">
                     <i class="fa-solid fa-recycle text-xl"></i>
@@ -52,7 +47,6 @@
                 </div>
             </a>
 
-            <!-- መፈለጊያ ባር (ለኮምፒውተር) -->
             <div class="hidden md:flex flex-1 max-w-md mx-8">
                 <div class="relative w-full">
                     <input type="text" id="desktopSearchInput" oninput="handleSearch(this.value)" placeholder="የሚፈልጉትን ሰከንድ ሃንድ እቃ እዚህ ይፈልጉ..." 
@@ -61,7 +55,6 @@
                 </div>
             </div>
 
-            <!-- ዋና ተግባራት (ለኮምፒውተር) -->
             <div class="hidden md:flex items-center gap-4">
                 <button onclick="showSection('favorites')" class="relative p-2.5 hover:bg-gray-100 rounded-xl transition text-gray-600">
                     <i class="fa-regular fa-heart text-xl"></i>
@@ -73,6 +66,638 @@
                 </button>
             </div>
 
-            <!-- ለስልክ የእቃ መለጠፊያ ቁልፍ -->
             <div class="flex md:hidden items-center gap-3">
-                <button onclick="openPostModal()" class="bg-pri
+                <button onclick="openPostModal()" class="bg-primary-600 text-white p-2 rounded-xl flex items-center justify-center font-bold">
+                    <i class="fa-solid fa-plus text-lg px-1"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <div class="p-4 bg-white border-b border-gray-100 block md:hidden">
+        <div class="relative w-full">
+            <input type="text" id="mobileSearchInput" oninput="handleSearch(this.value)" placeholder="ምሳሌ፡ የሰርግ ልብስ፣ አይፎን..." 
+                class="w-full pl-10 pr-4 py-3 bg-gray-100 border border-transparent rounded-xl focus:bg-white focus:border-primary-500 focus:ring-2 focus:ring-primary-100 outline-none transition text-sm">
+            <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3.5 text-gray-400"></i>
+        </div>
+    </div>
+
+    <main class="max-w-6xl mx-auto px-4 py-6">
+
+        <section id="home-section" class="space-y-6">
+            <div class="rounded-3xl p-6 md:p-12 text-white shadow-xl relative overflow-hidden bg-cover bg-center" 
+                 style="background-image: linear-gradient(rgba(5, 46, 22, 0.8), rgba(22, 101, 52, 0.7)), url('https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=1600&q=80');">
+                
+                <div class="relative z-10 max-w-lg space-y-4">
+                    <span class="bg-white/20 text-white text-xs font-bold px-3 py-1.5 rounded-full uppercase tracking-wider backdrop-blur-sm">ኢትዮጵያ ውስጥ #1 የሰከንድ ሃንድ ገበያ</span>
+                    <h1 class="text-3xl md:text-5xl font-extrabold leading-tight">የማይፈልጉትን ይሽጡ፣ የሚፈልጉትን በቅናሽ ይግዙ!</h1>
+                    <p class="text-white/90 text-sm md:text-base">ስልኮች፣ አልባሳት፣ የሰርግ ልብሶች፣ የቤት እና የቢሮ እቃዎችን በጥሩ ሁኔታ ላይ ያሉትን በተመጣጣኝ ዋጋ ያግኙ።</p>
+                    <div class="pt-2 flex flex-wrap gap-3">
+                        <button onclick="openPostModal()" class="bg-white text-primary-700 font-bold px-6 py-3 rounded-xl shadow-lg hover:bg-gray-100 transition active:scale-95">በነጻ እቃ ለመለጠፍ</button>
+                        <button onclick="scrollToProducts()" class="bg-transparent border border-white/40 hover:bg-white/10 text-white font-semibold px-5 py-3 rounded-xl transition">ሁሉንም እቃዎች ተመልከት</button>
+                    </div>
+                </div>
+                <div class="absolute -right-10 -bottom-10 w-64 h-64 bg-white/10 rounded-full blur-2xl"></div>
+                <div class="absolute -right-20 -top-20 w-80 h-80 bg-primary-500/20 rounded-full blur-3xl"></div>
+            </div>
+
+            <div>
+                <div class="flex items-center gap-2 mb-3">
+                    <i class="fa-solid fa-fire text-amber-500 text-lg animate-pulse"></i>
+                    <h2 class="text-lg font-black text-gray-800">የተመረጡ (Featured) እቃዎች</h2>
+                </div>
+                <div id="featuredContainer" class="flex gap-4 overflow-x-auto no-scrollbar pb-2">
+                    </div>
+            </div>
+
+            <div>
+                <div class="flex items-center justify-between mb-3">
+                    <h2 class="text-base font-bold text-gray-700">በምድብ ይለዩ</h2>
+                </div>
+                <div id="categoriesContainer" class="flex gap-3 overflow-x-auto no-scrollbar pb-2">
+                    </div>
+            </div>
+
+            <div id="products-anchor" class="pt-2">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
+                    <div>
+                        <h2 class="text-xl font-bold text-gray-800" id="sectionTitle">ሁሉም እቃዎች</h2>
+                        <p class="text-xs text-gray-500 mt-0.5" id="resultsCount">--</p>
+                    </div>
+                    <div class="flex items-center gap-2 overflow-x-auto no-scrollbar py-1">
+                        <select id="conditionFilter" onchange="renderProducts()" class="px-3 py-1.5 text-xs font-semibold rounded-xl bg-white border border-gray-200 text-gray-600 outline-none">
+                            <option value="all">ማንኛውም ሁኔታ</option>
+                            <option value="Like New">እንደ አዲስ</option>
+                            <option value="Very Good">በጣም ጥሩ</option>
+                            <option value="Good">ጥሩ ሁኔታ</option>
+                        </select>
+                        <button onclick="sortProducts('newest')" class="px-3 py-1.5 text-xs font-semibold rounded-xl bg-gray-100 text-gray-700 hover:bg-gray-200 transition whitespace-nowrap">አዲስ የወጡ</button>
+                        <button onclick="sortProducts('cheapest')" class="px-3 py-1.5 text-xs font-semibold rounded-xl bg-gray-100 text-gray-700 hover:bg-gray-200 transition whitespace-nowrap">ዋጋ አነስተኛ</button>
+                    </div>
+                </div>
+
+                <div id="productGrid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4"></div>
+
+                <div id="noResultsState" class="hidden flex-col items-center justify-center py-16 px-4 text-center">
+                    <div class="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center text-gray-400 mb-4">
+                        <i class="fa-solid fa-box-open text-3xl"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-700">ምንም የተገኘ እቃ የለም</h3>
+                    <p class="text-sm text-gray-400 mt-1">እባክዎ ሌላ ምድብ ይምረጡ ወይም ሌላ ቃል ተጠቅመው ይፈልጉ።</p>
+                    <button onclick="resetFilters()" class="mt-4 bg-primary-600 text-white px-5 py-2 rounded-xl text-sm font-semibold hover:bg-primary-700">ሁሉንም አሳይ</button>
+                </div>
+            </div>
+        </section>
+
+        <section id="favorites-section" class="hidden space-y-6">
+            <div class="flex items-center gap-3">
+                <button onclick="showSection('home')" class="w-10 h-10 bg-white border border-gray-100 rounded-xl flex items-center justify-center text-gray-600">
+                    <i class="fa-solid fa-arrow-left"></i>
+                </button>
+                <div>
+                    <h1 class="text-2xl font-bold text-gray-800">የእኔ ምርጫዎች</h1>
+                    <p class="text-xs text-gray-500">በኋላ ለመግዛት የመረጧቸው እቃዎች</p>
+                </div>
+            </div>
+            <div id="favoritesGrid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4"></div>
+            <div id="noFavoritesState" class="hidden flex-col items-center justify-center py-16 px-4 text-center">
+                <h3 class="text-lg font-bold text-gray-700">ምንም የተቀመጠ እቃ የለም</h3>
+                <p class="text-sm text-gray-400 mt-1">የሚወዱትን እቃ የልብ ምልክቱን በመንካት እዚህ ማስቀመጥ ይችላሉ።</p>
+                <button onclick="showSection('home')" class="mt-4 bg-primary-600 text-white px-5 py-2 rounded-xl text-sm font-semibold hover:bg-primary-700">እቃዎችን መመልከት ጀምር</button>
+            </div>
+        </section>
+
+    </main>
+
+    <nav class="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-100 shadow-xl px-6 py-2 flex items-center justify-between z-40">
+        <button onclick="showSection('home')" id="nav-home" class="flex flex-col items-center gap-1 text-primary-600">
+            <i class="fa-solid fa-house text-lg"></i>
+            <span class="text-[10px] font-bold">ዋና ገፅ</span>
+        </button>
+        <button onclick="openPostModal()" class="flex flex-col items-center gap-1 text-gray-400 relative -top-4">
+            <div class="w-12 h-12 bg-primary-600 rounded-full flex items-center justify-center text-white shadow-lg shadow-primary-500/30">
+                <i class="fa-solid fa-plus text-xl"></i>
+            </div>
+        </button>
+        <button onclick="showSection('favorites')" id="nav-favorites" class="flex flex-col items-center gap-1 text-gray-400">
+            <div class="relative">
+                <i class="fa-solid fa-heart text-lg"></i>
+                <span id="favMobileBadge" class="absolute -top-1.5 -right-2 bg-red-500 text-white text-[9px] w-4 h-4 rounded-full flex items-center justify-center hidden">0</span>
+            </div>
+            <span class="text-[10px] font-bold">ምርጫዎች</span>
+        </button>
+    </nav>
+
+    <div id="detailModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-end sm:items-center justify-center opacity-0 pointer-events-none transition-opacity duration-300">
+        <div class="bg-white w-full max-w-xl rounded-t-3xl sm:rounded-3xl shadow-2xl overflow-hidden max-h-[90vh] sm:max-h-[85vh] flex flex-col transform translate-y-10 transition-transform duration-300">
+            <div class="relative h-64 bg-gray-100 flex items-center justify-center">
+                <img id="modalImage" src="" alt="Item Image" class="w-full h-full object-cover">
+                <button onclick="closeDetailModal()" class="absolute top-4 right-4 w-10 h-10 bg-black/40 text-white rounded-full flex items-center justify-center">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+                <div class="absolute bottom-4 left-4 bg-black/50 text-white px-3 py-1 rounded-lg text-xs font-semibold backdrop-blur-sm" id="modalCategory">--</div>
+            </div>
+
+            <div class="p-6 overflow-y-auto space-y-4 flex-1">
+                <div class="flex items-start justify-between gap-4">
+                    <div>
+                        <div class="flex items-center gap-2 mb-1">
+                            <h2 id="modalTitle" class="text-xl font-bold text-gray-800">--</h2>
+                            <span id="modalFeaturedBadge" class="hidden bg-amber-100 text-amber-800 text-[10px] font-black px-2 py-0.5 rounded-md"><i class="fa-solid fa-fire mr-1"></i>TOP</span>
+                        </div>
+                        <div class="flex items-center gap-2 text-sm text-gray-500">
+                            <span class="flex items-center gap-1"><i class="fa-solid fa-location-dot"></i> <span id="modalLocation">--</span></span>
+                        </div>
+                    </div>
+                    <div class="text-right">
+                        <span id="modalPrice" class="text-2xl font-black text-primary-600 block">--</span>
+                        <span id="modalCondition" class="inline-block mt-1 bg-primary-100 text-primary-800 text-xs px-2.5 py-1 rounded-full font-bold">--</span>
+                    </div>
+                </div>
+
+                <hr class="border-gray-100">
+
+                <div>
+                    <h3 class="font-bold text-gray-800 mb-1">የእቃው መግለጫ</h3>
+                    <p id="modalDescription" class="text-sm text-gray-600 leading-relaxed">--</p>
+                </div>
+
+                <hr class="border-gray-100">
+
+                <div class="bg-gray-50 p-4 rounded-2xl border border-gray-100">
+                    <h3 class="text-xs font-bold text-gray-500 uppercase mb-2">ለሻጩ ፈጣን መልዕክት ይላኩ</h3>
+                    <div class="flex gap-2 mb-3 overflow-x-auto no-scrollbar">
+                        <button onclick="sendQuickMessage('አሁንም አለ? ለመግዛት ፈልጌ ነበር።')" class="bg-white border border-gray-200 text-xs px-3 py-1.5 rounded-full flex-shrink-0">አሁንም አለ?</button>
+                        <button onclick="sendQuickMessage('ዋጋው የመጨረሻ ነው ወይስ ይቀንሳል?')" class="bg-white border border-gray-200 text-xs px-3 py-1.5 rounded-full flex-shrink-0">ዋጋው ይቀንሳል?</button>
+                    </div>
+                    <div id="chatMessages" class="space-y-2 max-h-32 overflow-y-auto mb-3 hidden"></div>
+                    <div class="flex gap-2">
+                        <input type="text" id="chatInput" placeholder="መልዕክትዎን እዚህ ይጻፉ..." class="flex-1 bg-white border border-gray-200 rounded-xl px-3 py-2 text-xs outline-none focus:border-primary-500">
+                        <button onclick="sendCustomMessage()" class="bg-primary-600 text-white text-xs font-bold px-4 py-2 rounded-xl">ላክ</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="p-4 bg-gray-50 border-t border-gray-100 flex gap-3">
+                <a id="modalPhoneLink" href="tel:" class="flex-1 bg-primary-600 text-white font-bold py-3.5 rounded-xl text-center flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-phone"></i>
+                    <span>ደውለው ይግዙ (<span id="modalPhone">--</span>)</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div id="postModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-end sm:items-center justify-center opacity-0 pointer-events-none transition-opacity duration-300">
+        <div class="bg-white w-full max-w-lg rounded-t-3xl sm:rounded-3xl shadow-2xl overflow-hidden max-h-[90vh] sm:max-h-[85vh] flex flex-col transform translate-y-10 transition-transform duration-300">
+            <div class="p-4 border-b border-gray-100 flex justify-between items-center bg-gray-50">
+                <div>
+                    <h2 class="text-lg font-bold text-gray-800">ሁለተኛ እጅ እቃ በነጻ ይለጥፉ</h2>
+                    <p class="text-xs text-gray-500">እባክዎን የእቃውን ትክክለኛ መረጃ እና ፎቶ ያስገቡ</p>
+                </div>
+                <button onclick="closePostModal()" class="w-8 h-8 bg-gray-200 text-gray-600 rounded-full flex items-center justify-center">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <form id="postForm" onsubmit="handlePostSubmit(event)" class="p-6 space-y-4 overflow-y-auto flex-1">
+                <div>
+                    <label class="block text-xs font-bold text-gray-600 uppercase mb-2">የእቃው ፎቶ</label>
+                    <label for="imageUpload" class="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-gray-300 rounded-2xl cursor-pointer bg-gray-50 relative overflow-hidden">
+                        <div class="flex flex-col items-center justify-center text-center px-4" id="uploadPlaceholder">
+                            <i class="fa-solid fa-cloud-arrow-up text-3xl text-gray-400 mb-2"></i>
+                            <p class="text-xs text-gray-500 font-semibold">ፎቶ ለመጫን እዚህ ይንኩ</p>
+                        </div>
+                        <img id="imagePreview" src="#" alt="Preview" class="hidden w-full h-full object-cover absolute inset-0">
+                        <input id="imageUpload" type="file" accept="image/*" class="hidden">
+                    </label>
+                </div>
+
+                <div>
+                    <label for="postTitle" class="block text-xs font-bold text-gray-600 uppercase mb-1">የእቃው ስም (ርዕስ)</label>
+                    <input type="text" id="postTitle" required placeholder="ምሳሌ፡ ሳምሰንግ ቲቪ 43 ኢንች በጥሩ ሁኔታ ያለ" class="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm outline-none focus:bg-white focus:border-primary-500">
+                </div>
+
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label for="postCategory" class="block text-xs font-bold text-gray-600 uppercase mb-1">ምድብ</label>
+                        <select id="postCategory" required class="w-full px-3 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm outline-none focus:bg-white focus:border-primary-500">
+                            <option value="">ይምረጡ</option>
+                            <option value="phones">ስልኮች</option>
+                            <option value="electronics">ኤሌክትሮኒክስ</option>
+                            <option value="dresses">የሰርግ ልብሶች</option>
+                            <option value="shoes">ጫማዎች</option>
+                            <option value="furniture">የቤት እቃዎች</option>
+                            <option value="office">የቢሮ እቃዎች</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="postPrice" class="block text-xs font-bold text-gray-600 uppercase mb-1">ዋጋ (በብር)</label>
+                        <input type="number" id="postPrice" required placeholder="ዋጋ" class="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm outline-none focus:bg-white focus:border-primary-500">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label for="postCondition" class="block text-xs font-bold text-gray-600 uppercase mb-1">ሁኔታው</label>
+                        <select id="postCondition" required class="w-full px-3 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm outline-none focus:bg-white focus:border-primary-500">
+                            <option value="Like New">እንደ አዲስ</option>
+                            <option value="Very Good">በጣም ጥሩ</option>
+                            <option value="Good">ጥሩ ሁኔታ</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="postLocation" class="block text-xs font-bold text-gray-600 uppercase mb-1">ቦታ (አድራሻ)</label>
+                        <select id="postLocation" required class="w-full px-3 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm outline-none focus:bg-white focus:border-primary-500">
+                            <option value="Bole, Addis Ababa">ቦሌ</option>
+                            <option value="Megenagna, Addis Ababa">መገናኛ</option>
+                            <option value="CMC, Addis Ababa">ሲ ኤም ሲ (CMC)</option>
+                            <option value="Piazza, Addis Ababa">ፒያሳ</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div>
+                    <label for="postPhone" class="block text-xs font-bold text-gray-600 uppercase mb-1">የሻጭ ስልክ ቁጥር</label>
+                    <input type="tel" id="postPhone" required placeholder="0911223344" pattern="^09[0-9]{8}$" class="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm outline-none focus:bg-white focus:border-primary-500">
+                </div>
+
+                <div>
+                    <label for="postDescription" class="block text-xs font-bold text-gray-600 uppercase mb-1">ዝርዝር መግለጫ</label>
+                    <textarea id="postDescription" rows="3" required placeholder="ስለ እቃው ጥራት፣ ምን ያህል እንደተገገለ እና ጠቃሚ መረጃዎችን እዚህ ይፃፉ..." class="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm outline-none resize-none focus:bg-white focus:border-primary-500"></textarea>
+                </div>
+
+                <button type="submit" class="w-full bg-primary-600 text-white font-bold py-3.5 rounded-xl shadow-lg hover:bg-primary-700 transition">
+                    <span>በነጻ አሁን ይለጥፉ</span>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <div id="toast" class="fixed bottom-24 left-1/2 transform -translate-x-1/2 bg-gray-900 text-white px-5 py-3 rounded-2xl flex items-center gap-3 z-50 opacity-0 pointer-events-none transition-all duration-300">
+        <i id="toastIcon" class="fa-solid fa-circle-check text-primary-500"></i>
+        <span id="toastMessage" class="text-xs font-bold"></span>
+    </div>
+
+    <script>
+        // የአካባቢያዊ ዳታ ቁልፎች
+        const STORAGE_KEY = 'mako_listings_data_v2_am';
+        const FAV_STORAGE_KEY = 'mako_favorites_data_v2_am';
+
+        // መነሻ ምርቶች ዳታ
+        const defaultListings = [
+            {
+                id: 'item-1',
+                title: 'አይፎን 13 ፕሮ ማክስ (iPhone 13 Pro Max)',
+                category: 'phones',
+                price: 52000,
+                condition: 'Very Good',
+                location: 'Bole, Addis Ababa',
+                description: 'ባትሪ ሄልዝ 86% ነው፣ ምንም ጭረት የለውም። ኦሪጅናል ቻርጀር እና ካርቶን አለው።',
+                phone: '0911223344',
+                image: 'https://images.unsplash.com/photo-1632661674596-df8be070a5c5?auto=format&fit=crop&w=600&q=80',
+                featured: true
+            },
+            {
+                id: 'item-2',
+                title: 'የቅንጦት የሰርግ ልብስ (Wedding Dress)',
+                category: 'dresses',
+                price: 18000,
+                condition: 'Very Good',
+                location: 'Piazza, Addis Ababa',
+                description: 'ለአንድ ቀን ብቻ የለበስኩት እጅግ ያማረ የሰርግ ልብስ ነው። በጥራት የታጠበና ምንም አይነት እንከን የሌለበት ነው።',
+                phone: '0922334455',
+                image: 'https://images.unsplash.com/photo-1594552072238-b8a33785b261?auto=format&fit=crop&w=600&q=80',
+                featured: true
+            },
+            {
+                id: 'item-3',
+                title: 'የቢሮ የሚሽከረከር ምቹ ወንበር',
+                category: 'office',
+                price: 4500,
+                condition: 'Good',
+                location: 'Megenagna, Addis Ababa',
+                description: 'ለስራ በጣም ምቹ የሆነ እና ቁመቱ ወደ ላይ እና ታች የሚስተካከል በጥራት የተያዘ ወንበር።',
+                phone: '0933445566',
+                image: 'https://images.unsplash.com/photo-1505797149-43b0069ec26b?auto=format&fit=crop&w=600&q=80',
+                featured: false
+            },
+            {
+                id: 'item-4',
+                title: 'ሳምሰንግ ባለ 43 ኢንች ስማርት ቲቪ',
+                category: 'electronics',
+                price: 24000,
+                condition: 'Like New',
+                location: 'CMC, Addis Ababa',
+                description: '4K የቪዲዮ ጥራት ያለው፣ ዩቲዩብ እና ኔትፍሊክስ ያለ ምንም መቆራረጥ የሚሰራበት በጥሩ ሁኔታ ላይ ያለ ቲቪ።',
+                phone: '0944556677',
+                image: 'https://images.unsplash.com/photo-1593305841991-05c297ba4575?auto=format&fit=crop&w=600&q=80',
+                featured: false
+            }
+        ];
+
+        const categories = [
+            { id: 'all', name: 'ሁሉንም', icon: 'fa-solid fa-border-all' },
+            { id: 'phones', name: 'ስልኮች', icon: 'fa-solid fa-mobile-screen-button' },
+            { id: 'electronics', name: 'ኤሌክትሮኒክስ', icon: 'fa-solid fa-tv' },
+            { id: 'dresses', name: 'የሰርግ ልብሶች', icon: 'fa-solid fa-person-dress' },
+            { id: 'shoes', name: 'ጫማዎች', icon: 'fa-solid fa-shoe-prints' },
+            { id: 'furniture', name: 'የቤት እቃዎች', icon: 'fa-solid fa-couch' },
+            { id: 'office', name: 'የቢሮ እቃዎች', icon: 'fa-solid fa-briefcase' }
+        ];
+
+        let listings = JSON.parse(localStorage.getItem(STORAGE_KEY)) || defaultListings;
+        let favorites = JSON.parse(localStorage.getItem(FAV_STORAGE_KEY)) || [];
+        let selectedCategory = 'all';
+        let searchQuery = '';
+        let activeListingForChat = null;
+
+        window.addEventListener('DOMContentLoaded', () => {
+            renderCategories();
+            renderFeatured();
+            renderProducts();
+            updateFavBadges();
+            document.getElementById('imageUpload').addEventListener('change', previewFile);
+        });
+
+        function scrollToProducts() {
+            document.getElementById('products-anchor').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function renderCategories() {
+            const container = document.getElementById('categoriesContainer');
+            container.innerHTML = '';
+            categories.forEach(cat => {
+                const isActive = selectedCategory === cat.id;
+                const button = document.createElement('button');
+                button.onclick = () => { selectedCategory = cat.id; renderCategories(); renderProducts(); };
+                button.className = `flex items-center gap-2 px-4 py-2.5 rounded-xl border transition flex-shrink-0 ${isActive ? 'bg-primary-600 text-white border-primary-600 font-bold' : 'bg-white text-gray-600 border-gray-100'}`;
+                button.innerHTML = `<i class="${cat.icon}"></i><span class="text-xs">${cat.name}</span>`;
+                container.appendChild(button);
+            });
+        }
+
+        function renderFeatured() {
+            const container = document.getElementById('featuredContainer');
+            container.innerHTML = '';
+            const featuredItems = listings.filter(item => item.featured);
+
+            featuredItems.forEach(item => {
+                const div = document.createElement('div');
+                div.onclick = () => openDetailModal(item.id);
+                div.className = "bg-white border border-gray-100 rounded-2xl p-2 min-w-[200px] w-48 flex-shrink-0 shadow-sm cursor-pointer relative group";
+                div.innerHTML = `
+                    <div class="h-28 bg-gray-50 rounded-xl overflow-hidden relative">
+                        <img src="${item.image}" class="w-full h-full object-cover">
+                        <span class="absolute top-1.5 left-1.5 bg-amber-500 text-white text-[9px] font-black px-1.5 py-0.5 rounded-md"><i class="fa-solid fa-fire mr-1"></i>TOP</span>
+                    </div>
+                    <h3 class="text-xs font-bold text-gray-800 mt-2 truncate">${item.title}</h3>
+                    <span class="text-xs font-black text-primary-600 block mt-1">${formatPrice(item.price)} ብር</span>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function renderProducts() {
+            const grid = document.getElementById('productGrid');
+            const noResults = document.getElementById('noResultsState');
+            const conditionVal = document.getElementById('conditionFilter').value;
+            grid.innerHTML = '';
+
+            const filtered = listings.filter(item => {
+                const matchesCategory = selectedCategory === 'all' || item.category === selectedCategory;
+                const matchesCondition = conditionVal === 'all' || item.condition === conditionVal;
+                const matchesSearch = item.title.toLowerCase().includes(searchQuery) || item.description.toLowerCase().includes(searchQuery);
+                return matchesCategory && matchesCondition && matchesSearch;
+            });
+
+            document.getElementById('resultsCount').textContent = `በአጠቃላይ ${filtered.length} እቃዎች ተገኝተዋል`;
+
+            if (filtered.length === 0) {
+                grid.classList.add('hidden');
+                noResults.classList.remove('hidden');
+                return;
+            }
+
+            grid.classList.remove('hidden');
+            noResults.classList.add('hidden');
+
+            filtered.forEach(item => {
+                const isFav = favorites.includes(item.id);
+                const card = document.createElement('div');
+                card.className = "bg-white border border-gray-100 rounded-2xl overflow-hidden shadow-sm flex flex-col relative group";
+                card.innerHTML = `
+                    <div class="relative h-36 bg-gray-50 overflow-hidden cursor-pointer" onclick="openDetailModal('${item.id}')">
+                        <img src="${item.image}" class="w-full h-full object-cover">
+                        ${item.featured ? '<span class="absolute top-2 left-2 bg-amber-500 text-white text-[9px] font-black px-1.5 py-0.5 rounded-md"><i class="fa-solid fa-fire"></i></span>' : ''}
+                    </div>
+                    <button onclick="toggleFavorite(event, '${item.id}')" class="absolute top-2 right-2 w-7 h-7 bg-white/90 rounded-full flex items-center justify-center text-gray-400">
+                        <i class="${isFav ? 'fa-solid fa-heart text-red-500' : 'fa-regular fa-heart'}"></i>
+                    </button>
+                    <div class="p-3 flex-1 flex flex-col justify-between gap-1">
+                        <h3 class="text-xs font-bold text-gray-800 line-clamp-2 h-8 cursor-pointer" onclick="openDetailModal('${item.id}')">${item.title}</h3>
+                        <div class="flex items-center justify-between mt-1">
+                            <span class="text-xs font-black text-primary-600">${formatPrice(item.price)} ብር</span>
+                            <span class="text-[9px] bg-gray-100 px-1.5 py-0.5 rounded text-gray-500">${item.condition === 'Very Good' ? 'በጣም ጥሩ' : item.condition === 'Like New' ? 'እንደ አዲስ' : 'ጥሩ'}</span>
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function handleSearch(val) {
+            searchQuery = val.toLowerCase().trim();
+            document.getElementById('desktopSearchInput').value = val;
+            document.getElementById('mobileSearchInput').value = val;
+            renderProducts();
+        }
+
+        function sortProducts(criteria) {
+            if (criteria === 'newest') listings.sort((a, b) => b.id.localeCompare(a.id));
+            else if (criteria === 'cheapest') listings.sort((a, b) => a.price - b.price);
+            renderProducts();
+        }
+
+        function formatPrice(num) { return new Intl.NumberFormat().format(num); }
+
+        function showSection(section) {
+            document.getElementById('home-section').classList.toggle('hidden', section !== 'home');
+            document.getElementById('favorites-section').classList.toggle('hidden', section !== 'favorites');
+            if (section === 'favorites') renderFavorites();
+        }
+
+        function toggleFavorite(event, id) {
+            event.stopPropagation();
+            if (favorites.includes(id)) {
+                favorites = favorites.filter(favId => favId !== id);
+                showToast('ከምርጫዎች ላይ ተነስቷል።');
+            } else {
+                favorites.push(id);
+                showToast('በተሳካ ሁኔታ ወደ ምርጫዎች ተቀምጧል!');
+            }
+            localStorage.setItem(FAV_STORAGE_KEY, JSON.stringify(favorites));
+            updateFavBadges(); renderProducts();
+        }
+
+        function updateFavBadges() {
+            const count = favorites.length;
+            document.getElementById('favBadge').textContent = count;
+            document.getElementById('favBadge').classList.toggle('hidden', count === 0);
+            document.getElementById('favMobileBadge').textContent = count;
+            document.getElementById('favMobileBadge').classList.toggle('hidden', count === 0);
+        }
+
+        function renderFavorites() {
+            const grid = document.getElementById('favoritesGrid');
+            grid.innerHTML = '';
+            const favItems = listings.filter(item => favorites.includes(item.id));
+            document.getElementById('noFavoritesState').classList.toggle('hidden', favItems.length > 0);
+
+            favItems.forEach(item => {
+                const card = document.createElement('div');
+                card.className = "bg-white border border-gray-100 rounded-2xl p-3 flex flex-col justify-between h-32 relative";
+                card.innerHTML = `
+                    <div>
+                        <h3 class="text-xs font-bold text-gray-800 line-clamp-2">${item.title}</h3>
+                        <p class="text-xs text-primary-600 font-bold mt-1">${formatPrice(item.price)} ብር</p>
+                    </div>
+                    <div class="flex justify-between items-center mt-2">
+                        <button onclick="openDetailModal('${item.id}')" class="text-[10px] text-primary-600 bg-primary-50 px-2.5 py-1 rounded-lg">እቃውንይመልከቱ</button>
+                        <button onclick="toggleFavorite(event, '${item.id}')" class="text-xs text-red-500"><i class="fa-solid fa-trash"></i></button>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function openDetailModal(id) {
+            const item = listings.find(i => i.id === id);
+            if (!item) return;
+            activeListingForChat = item;
+            document.getElementById('modalImage').src = item.image;
+            document.getElementById('modalTitle').textContent = item.title;
+            document.getElementById('modalPrice').textContent = `${formatPrice(item.price)} ብር`;
+            document.getElementById('modalCondition').textContent = item.condition === 'Very Good' ? 'በጣም ጥሩ' : item.condition === 'Like New' ? 'እንደ አዲስ' : 'ጥሩ';
+            document.getElementById('modalDescription').textContent = item.description;
+            document.getElementById('modalPhone').textContent = item.phone;
+            document.getElementById('modalPhoneLink').href = `tel:${item.phone}`;
+            document.getElementById('modalFeaturedBadge').classList.toggle('hidden', !item.featured);
+            document.getElementById('modalLocation').textContent = item.location === 'Bole, Addis Ababa' ? 'ቦሌ, አዲስ አበባ' : item.location === 'Piazza, Addis Ababa' ? 'ፒያሳ, አዲስ አበባ' : item.location === 'Megenagna, Addis Ababa' ? 'መገናኛ, አዲስ አበባ' : 'ሲ ኤም ሲ, አዲስ አበባ';
+
+            // የፈጣን ግንኙነት ሲሙሌሽን መነሻ
+            document.getElementById('chatMessages').innerHTML = '';
+            document.getElementById('chatMessages').classList.add('hidden');
+            document.getElementById('chatInput').value = '';
+
+            const modal = document.getElementById('detailModal');
+            modal.classList.remove('opacity-0', 'pointer-events-none');
+            modal.querySelector('.transform').classList.remove('translate-y-10');
+        }
+
+        function closeDetailModal() {
+            document.getElementById('detailModal').classList.add('opacity-0', 'pointer-events-none');
+        }
+
+        function openPostModal() {
+            document.getElementById('postModal').classList.remove('opacity-0', 'pointer-events-none');
+        }
+
+        function closePostModal() {
+            document.getElementById('postModal').classList.add('opacity-0', 'pointer-events-none');
+        }
+
+        let uploadedImageBase64 = "https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=600&q=80";
+        function previewFile() {
+            const file = document.getElementById('imageUpload').files[0];
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                document.getElementById('imagePreview').src = reader.result;
+                document.getElementById('imagePreview').classList.remove('hidden');
+                document.getElementById('uploadPlaceholder').classList.add('hidden');
+                uploadedImageBase64 = reader.result;
+            }
+            if (file) reader.readAsDataURL(file);
+        }
+
+        function handlePostSubmit(event) {
+            event.preventDefault();
+            const newListing = {
+                id: 'item-' + Date.now(),
+                title: document.getElementById('postTitle').value,
+                category: document.getElementById('postCategory').value,
+                price: parseFloat(document.getElementById('postPrice').value),
+                condition: document.getElementById('postCondition').value,
+                location: document.getElementById('postLocation').value,
+                phone: document.getElementById('postPhone').value,
+                description: document.getElementById('postDescription').value,
+                image: uploadedImageBase64,
+                featured: false
+            };
+            listings.unshift(newListing);
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(listings));
+            closePostModal(); renderProducts(); renderFeatured();
+            showToast('እቃዎ በተሳካ ሁኔታ ተለጥፏል!');
+        }
+
+        function sendQuickMessage(msg) {
+            document.getElementById('chatInput').value = msg;
+            sendCustomMessage();
+        }
+
+        function sendCustomMessage() {
+            const input = document.getElementById('chatInput');
+            const messageText = input.value.trim();
+            if (!messageText) return;
+
+            const chatMessages = document.getElementById('chatMessages');
+            chatMessages.classList.remove('hidden');
+
+            const userBubble = document.createElement('div');
+            userBubble.className = "flex justify-end";
+            userBubble.innerHTML = `
+                <div class="bg-primary-600 text-white text-[11px] px-3 py-1.5 rounded-2xl rounded-tr-none max-w-[80%]">
+                    ${messageText}
+                </div>
+            `;
+            chatMessages.appendChild(userBubble);
+            input.value = '';
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+
+            // ለሻጭ የተመሰለ ፈጣን ምላሽ
+            setTimeout(() => {
+                const sellerBubble = document.createElement('div');
+                sellerBubble.className = "flex justify-start";
+                
+                let answer = "ሰላም! አዎ እቃው አሁንም አልተሸጠም። በስልክ ቁጥሬ ደውለው ማውራት እንችላለን።";
+                if (messageText.includes('ቀንሳል') || messageText.includes('ዋጋው')) {
+                    answer = "ለእውነተኛ ገዢ በጥቂቱ እቀንሳለሁ። ስልክ ቁጥሬ ላይ ደውለው ያነጋግሩኝ።";
+                }
+
+                sellerBubble.innerHTML = `
+                    <div class="bg-gray-200 text-gray-800 text-[11px] px-3 py-1.5 rounded-2xl rounded-tl-none max-w-[80%]">
+                        ${answer}
+                    </div>
+                `;
+                chatMessages.appendChild(sellerBubble);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }, 1000);
+        }
+
+        function resetFilters() {
+            selectedCategory = 'all';
+            searchQuery = '';
+            document.getElementById('desktopSearchInput').value = '';
+            document.getElementById('mobileSearchInput').value = '';
+            document.getElementById('conditionFilter').value = 'all';
+            renderCategories();
+            renderProducts();
+        }
+
+        function showToast(msg) {
+            document.getElementById('toastMessage').textContent = msg;
+            document.getElementById('toast').classList.remove('opacity-0', 'pointer-events-none');
+            setTimeout(() => document.getElementById('toast').classList.add('opacity-0', 'pointer-events-none'), 3000);
+        }
+    </script>
+</body>
+</html>
